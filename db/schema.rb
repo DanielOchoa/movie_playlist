@@ -11,6 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20130425024328) do
+
+  create_table "movies", :force => true do |t|
+    t.integer  "rotting_id"
+    t.string   "title"
+    t.text     "synopsis"
+    t.integer  "runtime"
+    t.integer  "year"
+    t.integer  "rating"
+    t.string   "mpaa_rating"
+    t.string   "thumb"
+    t.string   "original"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "movies", ["rotting_id"], :name => "index_movies_on_rotting_id"
 
 end

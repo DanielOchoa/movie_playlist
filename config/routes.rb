@@ -1,5 +1,7 @@
 MoviePlaylist::Application.routes.draw do
-  resources :movies
+  resources :movies do
+    match :search, on: :collection
+  end
 
 
   # The priority is based upon order of creation:

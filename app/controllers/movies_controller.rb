@@ -40,17 +40,33 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.json
   def create
-    @movie = Movie.new(params[:movie])
+    #@movie = Movie.new(params[:movie])
+    movie = Movie_fetch.movie(params[:movie][:title])
+    # with return redirect_to, the rest of the code won't run.
+    return redirect_to search_movies_path, notice: "No results found." unless movie
 
-    respond_to do |format|
+    localmovie = Movie.find_by_rotting_id(movie[:rotting_id])
+
+    if localmovie.nil?
+      @movie = Movie.new(movie)
       if @movie.save
-        format.html { redirect_to @movie, notice: 'Movie was successfully created.' }
-        format.json { render json: @movie, status: :created, location: @movie }
+        redirect_to movies_path, notice: "Here's some movies!"
       else
-        format.html { render action: "new" }
-        format.json { render json: @movie.errors, status: :unprocessable_entity }
+        redirect_to search_movies_path, notice: @movie.errors.full_messages
       end
+    else
+      redirect_to movies_path(:search => localmovie.title), notice: "Results:"
     end
+
+    # respond_to do |format|
+    #   if @movie.save
+    #     format.html { redirect_to @movie, notice: 'Movie was successfully created.' }
+    #     format.json { render json: @movie, status: :created, location: @movie }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @movie.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PUT /movies/1
@@ -79,5 +95,13 @@ class MoviesController < ApplicationController
       format.html { redirect_to movies_url }
       format.json { head :no_content }
     end
+  end
+
+  #custom
+  def search
+    @movie = Movie.new
+    #@movie = Movie_fetch.movie('Amelie')
+    #@moviename = @movie['title']
+
   end
 end

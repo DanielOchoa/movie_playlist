@@ -9,6 +9,7 @@ gem "httparty", "~> 0.11.0"
 gem 'haml'
 gem 'haml-rails'
 gem 'bootstrap-sass'
+gem 'bootstrap-will_paginate'
 
 group :development, :test do
   gem 'sqlite3'
@@ -38,7 +39,7 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '0.12.2'
 end
 
 # To use ActiveModel has_secure_password
