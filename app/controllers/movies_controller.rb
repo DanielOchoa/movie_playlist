@@ -41,21 +41,21 @@ class MoviesController < ApplicationController
   # POST /movies.json
   def create
     #@movie = Movie.new(params[:movie])
-    movie = Movie_fetch.movie(params[:movie][:title])
+    movie = MovieFetch.movie(params[:search]) unless params[:search].blank?
     # with return redirect_to, the rest of the code won't run.
-    return redirect_to search_movies_path, notice: "No results found." unless movie
+    return redirect_to movies_path(:serach => params[:search]), notice: "No results found." unless movie
 
     localmovie = Movie.find_by_rotting_id(movie[:rotting_id])
 
     if localmovie.nil?
       @movie = Movie.new(movie)
       if @movie.save
-        redirect_to movies_path, notice: "Here's some movies!"
+        redirect_to movies_path(:search => params[:search]), notice: "Here's some movies!"
       else
-        redirect_to search_movies_path, notice: @movie.errors.full_messages
+        redirect_to movies_path, notice: @movie.errors.full_messages
       end
     else
-      redirect_to movies_path(:search => localmovie.title), notice: "Results:"
+      redirect_to movies_path(:search => params[:search]), notice: "Results:"
     end
 
     # respond_to do |format|
@@ -97,11 +97,4 @@ class MoviesController < ApplicationController
     end
   end
 
-  #custom
-  def search
-    @movie = Movie.new
-    #@movie = Movie_fetch.movie('Amelie')
-    #@moviename = @movie['title']
-
-  end
 end

@@ -12,7 +12,7 @@ gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'pg'
   gem 'rspec-rails', '2.11.0'
 end
 
