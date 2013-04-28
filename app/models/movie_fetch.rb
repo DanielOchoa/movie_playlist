@@ -9,7 +9,7 @@ class MovieFetch
     movies = get('/movies.json', :query => {'apikey' => @apikey, 'q' => movie_name, 'page_limit' => limit})
     return false if movies['movies'].blank?
     movielist = []
-    movies['movies'].each { |movie| movielist << movie_parse(movie) }
+    movies['movies'].each { |movie| movielist << add_to_db(movie_parse(movie)) }
     movielist
   end
 
@@ -35,11 +35,14 @@ class MovieFetch
   private
 
     def self.movie_parse(movie)
+      return false if movie['posters']['detailed'].include? 'poster_default.gif'
+      synopsis = params_or_false(movie['synopsis']) || params_or_false(movie['critics_consensus'])
+      return false unless synopsis
       {
         rotting_id:   movie['id'],
         title:        movie['title'],
-        # for some reason many movies are missing synopsys..
-        synopsis:     params_or_false(movie['synopsis']) || params_or_false(movie['critics_consensus']) || "No Description.",
+        # for some reason many movies are missing synopsis..
+        synopsis:     synopsis,
         runtime:      movie['runtime'],
         year:         movie['year'],
         # get the audience score ratings, not the critics..
@@ -52,5 +55,9 @@ class MovieFetch
 
     def self.params_or_false(param)
       param unless param.blank?
+    end
+
+    def self.add_to_db(movie)
+      Movie.where(rotting_id: movie[:rotting_id]).first_or_create(movie) unless movie.blank?
     end
 end

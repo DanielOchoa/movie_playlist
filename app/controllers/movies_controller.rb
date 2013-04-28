@@ -2,12 +2,18 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @movies }
+    if params[:search].present?
+      # call our MovieFetch first to pass search to DB...
+      MovieFetch.movies(params[:search])
+      @movies = Movie.text_search(params[:search])
+    else
+      @movies = Movie.limit(15)
     end
+
+    # respond_to do |format|
+    #   format.html # index.html.erb
+    #   format.json { render json: @movies }
+    # end
   end
 
   # GET /movies/1
