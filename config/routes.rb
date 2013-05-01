@@ -1,4 +1,7 @@
 MoviePlaylist::Application.routes.draw do
+  resources :users
+
+
   # resources :movies do
   #   match :search, on: :collection
   # end

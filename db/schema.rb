@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130425024328) do
+ActiveRecord::Schema.define(:version => 20130501034636) do
 
   create_table "movies", :force => true do |t|
     t.integer  "rotting_id"
@@ -28,5 +28,18 @@ ActiveRecord::Schema.define(:version => 20130425024328) do
   end
 
   add_index "movies", ["rotting_id"], :name => "index_movies_on_rotting_id"
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "remember_token"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "admin",           :default => false
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
 end
