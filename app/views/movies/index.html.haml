@@ -14,6 +14,16 @@
         = movie.title
       %p
         = movie.synopsis
+      %p
+        = pluralize(movie.runtime, 'minute')
+        <br>
+        = movie.year
+        <br>
+        = movie.rating
+        <br>
+        = movie.mpaa_rating
+      <hr>
+
 
 / %table
 /   %tr

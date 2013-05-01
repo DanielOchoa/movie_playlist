@@ -10,6 +10,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
+gem 'textacular', '~> 3.0', require: 'textacular/rails'
 
 group :development, :test do
   gem 'pg'

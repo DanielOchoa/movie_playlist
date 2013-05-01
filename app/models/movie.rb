@@ -11,7 +11,9 @@ class Movie < ActiveRecord::Base
 
   def self.text_search(query)
     if query.present?
-      where("title @@ :q", q: query)
+      #where("title @@ :q", q: query)
+      # with texticle now...
+      basic_search(query)
     else
       scoped
     end
