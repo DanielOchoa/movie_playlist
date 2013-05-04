@@ -1,0 +1,16 @@
+
+%div{class: cycle('odd', 'even')}
+  = image_tag movie.thumb, alt: movie.title
+  %h2
+    = link_to movie.title, movie
+  %p
+    = movie.synopsis
+  %p
+    = pluralize(movie.runtime, 'minute')
+    <br>
+    = movie.year
+    <br>
+    = movie.rating
+    <br>
+    = movie.mpaa_rating
+  <hr>

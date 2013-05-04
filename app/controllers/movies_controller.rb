@@ -5,9 +5,9 @@ class MoviesController < ApplicationController
     if params[:search].present?
       # call our MovieFetch first to pass search to DB...
       MovieFetch.movies(params[:search])
-      @movies = Movie.text_search(params[:search])
+      @movies = Movie.text_search(params[:search]).paginate(page: params[:page], :per_page => 15)
     else
-      @movies = Movie.limit(15)
+      @movies = Movie.paginate(page: params[:page], :per_page => 15)
     end
 
     # respond_to do |format|

@@ -1,12 +1,19 @@
 MoviePlaylist::Application.routes.draw do
-  resources :users
 
+  root :to => 'movies#index'
 
-  # resources :movies do
-  #   match :search, on: :collection
-  # end
-
+  resources :sessions,    only: [:new, :create, :destroy]
+  resources :users do
+    #match :playlist, on: :member
+    #resources :playlist, only: [:show]
+    match "playlist" => "playlists#show"
+  end
   resources :movies
+
+  match '/signup',  to: 'users#new'
+  match '/signin',  to: 'sessions#new'
+  get '/signout', to: 'sessions#destroy', via: :delete
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

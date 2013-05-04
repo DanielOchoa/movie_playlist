@@ -7,54 +7,10 @@
     = submit_tag "Search", name: nil
 
 .results
-  - @movies.each do |movie|
-    %div{class: cycle('odd', 'even')}
-      = image_tag movie.thumb, alt: movie.title
-      %h2
-        = movie.title
-      %p
-        = movie.synopsis
-      %p
-        = pluralize(movie.runtime, 'minute')
-        <br>
-        = movie.year
-        <br>
-        = movie.rating
-        <br>
-        = movie.mpaa_rating
-      <hr>
+  - if @movies.blank?
+    %h2
+      No Results found
+  - else
+    = render @movies
 
-
-/ %table
-/   %tr
-/     %th Rotting
-/     %th Title
-/     %th Synopsis
-/     %th Runtime
-/     %th Year
-/     %th Rating
-/     %th Mpaa rating
-/     %th Thumb
-/     %th Original
-/     %th
-/     %th
-/     %th
-
-/   - @movies.each do |movie|
-/     %tr
-/       %td= movie.rotting_id
-/       %td= movie.title
-/       %td= movie.synopsis
-/       %td= movie.runtime
-/       %td= movie.year
-/       %td= movie.rating
-/       %td= movie.mpaa_rating
-/       %td= image_tag movie.thumb, alt: movie.title
-/       %td= movie.original
-/       %td= link_to 'Show', movie
-/       %td= link_to 'Edit', edit_movie_path(movie)
-/       %td= link_to 'Destroy', movie, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-/ %br
-
-/ = link_to 'New Movie', new_movie_path
+= will_paginate @movies

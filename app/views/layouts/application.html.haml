@@ -1,15 +1,19 @@
 !!! 5
 
 %head
-  %title Movie Playlist
+  %title= full_title(yield(:title))
   =stylesheet_link_tag "application", :media => "all"
   =javascript_include_tag "application"
   =csrf_meta_tags
 %body
+  = render 'layouts/header'
+  .container
 
-  - flash.each do |key, value|
-    = content_tag(:div, value, class: "alert alert-#{key}")
+    - flash.each do |key, value|
+      = content_tag(:div, value, class: "alert alert-#{key}")
 
-  =yield
+    = yield
 
-  =debug(params) if Rails.env.development?
+    = render 'layouts/footer'
+
+    =debug(params) if Rails.env.development?

@@ -1,33 +1,49 @@
 %p#notice= notice
 
-%p
-  %b Rotting:
-  = @movie.rotting_id
-%p
-  %b Title:
-  = @movie.title
-%p
-  %b Synopsis:
-  = @movie.synopsis
-%p
-  %b Runtime:
-  = @movie.runtime
-%p
-  %b Year:
-  = @movie.year
-%p
-  %b Rating:
-  = @movie.rating
-%p
-  %b Mpaa rating:
-  = @movie.mpaa_rating
-%p
-  %b Thumb:
-  = @movie.thumb
-%p
-  %b Original:
-  = @movie.original
+/ %p
+/   %b Rotting:
+/   = @movie.rotting_id
+/ %p
+/   %b Title:
+/   = @movie.title
+/ %p
+/   %b Synopsis:
+/   = @movie.synopsis
+/ %p
+/   %b Runtime:
+/   = @movie.runtime
+/ %p
+/   %b Year:
+/   = @movie.year
+/ %p
+/   %b Rating:
+/   = @movie.rating
+/ %p
+/   %b Mpaa rating:
+/   = @movie.mpaa_rating
+/ %p
+/   %b Thumb:
+/   = @movie.thumb
+/ %p
+/   %b Original:
+/   = @movie.original
 
-= link_to 'Edit', edit_movie_path(@movie)
-\|
-= link_to 'Back', movies_path
+/ = link_to 'Edit', edit_movie_path(@movie)
+/ \|
+/ = link_to 'Back', movies_path
+
+.head-poster
+  = image_tag @movie.original, alt: @movie.title
+
+.title
+  %h1= @movie.title
+.synopsis
+  %p= @movie.synopsis
+.runtime
+  = @movie.runtime
+.year
+  = @movie.year
+.rating
+  = @movie.rating
+.mpaa
+  = @movie.mpaa_rating

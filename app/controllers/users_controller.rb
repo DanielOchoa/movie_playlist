@@ -19,10 +19,18 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
 
+    # unless current_user?(@user)
+    #   redirect_to current_user, notice: "Your a naughty boy!"
+    #   return
+    # end
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
     end
+
+    rescue ActiveRecord::RecordNotFound
+      redirect_to current_user
   end
 
   # GET /users/new
@@ -46,14 +54,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      sign_in @user
+      flash[:success] = "Welcome to Movies!"
+      redirect_to root_path
+    else
+      render 'new'
     end
   end
 

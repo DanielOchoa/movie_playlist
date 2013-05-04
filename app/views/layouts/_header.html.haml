@@ -1,0 +1,25 @@
+%header.navbar.navbar-fixed-top.navbar-inverse
+  .navbar-inner
+    .container
+      = link_to "Movies!", root_path, id: "logo"
+      %nav
+        %ul.nav.pull-right
+          %li= link_to "Home", root_path
+
+          - if signed_in?
+
+            %li#fat-menu.dropdown
+              %a.dropdown-toggle{href: '#', data: {toggle: "dropdown"}}
+                = current_user.name
+                %b.caret
+                %ul.dropdown-menu
+                  %li= link_to "My Movies", '#'
+                  %li= link_to "My Account", user_path(current_user)
+                  %li.divider
+                  %li= link_to "Sign out", signout_path
+
+          - else
+
+            %li= link_to "Sign In", signin_path
+            // do something
+
