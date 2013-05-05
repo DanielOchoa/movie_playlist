@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130504153927) do
+ActiveRecord::Schema.define(:version => 20130504224825) do
 
   create_table "movies", :force => true do |t|
     t.integer  "rotting_id"
@@ -25,9 +25,11 @@ ActiveRecord::Schema.define(:version => 20130504153927) do
     t.string   "original"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "slug"
   end
 
   add_index "movies", ["rotting_id"], :name => "index_movies_on_rotting_id"
+  add_index "movies", ["slug"], :name => "index_movies_on_slug", :unique => true
 
   create_table "playlists", :force => true do |t|
     t.integer  "user_id"

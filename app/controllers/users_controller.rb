@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
   end
 
   # POST /users
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -91,18 +91,4 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless correct_user?(@user)
-    end
-
-    def admin_user
-      redirect_to(root_path) unless current_user.admin? && User.find(params[:id]) != current_user
-    end
-
-    def user_exists
-      redirect_to(current_user) unless !signed_in?
-    end
 end
